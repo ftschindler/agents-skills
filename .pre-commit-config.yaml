@@ -1,0 +1,87 @@
+---
+# Pre-commit configuration for the ~/.agents skills repo.
+# Runner: prek (https://github.com/j178/prek) — reads this standard format.
+# Scope: this repo hosts portable Agent Skills (.agents/skills/<name>/SKILL.md)
+# read by OpenCode and pi.dev. Keep it markdown/YAML focused.
+repos:
+# -- Validate the markdownlint-cli2 config against its own schema --
+- repo: https://github.com/python-jsonschema/check-jsonschema
+  rev: 5030dca3047414c338091455ac41803200ec1f0f  # frozen: 0.37.3
+  hooks:
+  - id: check-jsonschema
+    name: Validate markdownlint-cli2 config schema
+    files: ^\.markdownlint-cli2\.jsonc$
+    # ATTENTION: keep this version in sync with the markdownlint-cli2 hook below.
+    args: [--schemafile, 'https://raw.githubusercontent.com/DavidAnson/markdownlint-cli2/v0.18.1/schema/markdownlint-cli2-config-schema.json']
+# -- Markdown linting and canonicalisation --
+- repo: https://github.com/DavidAnson/markdownlint-cli2
+  # ATTENTION: keep this version in sync with check-jsonschema above.
+  rev: 996abf60411a8d954288ac9856aae7602b80cbda  # frozen: v0.22.1
+  hooks:
+  - id: markdownlint-cli2
+    files: \.md$
+    args: [--config=.markdownlint-cli2.jsonc, --fix]
+- repo: https://github.com/jackdewinter/pymarkdown
+  rev: 5a91b386476b633c4a594951397139aa5ab45a78  # frozen: v0.9.38
+  hooks:
+  - id: pymarkdown
+    name: PyMarkdown linter
+    files: \.md$
+    args: [--disable-rules, MD046, fix]
+    pass_filenames: true
+- repo: local
+  hooks:
+  - id: linkspector
+    name: Check broken links (linkspector)
+    entry: linkspector check -c .linkspector.yml
+    language: node
+    additional_dependencies: ['@umbrelladocs/linkspector@0.5.3']
+    pass_filenames: false
+    files: \.md$
+# -- YAML formatting (SKILL.md frontmatter + repo YAML) --
+- repo: https://github.com/google/yamlfmt
+  rev: 21ca5323a9c87ee37a434e0ca908efc0a89daa07  # frozen: v0.21.0
+  hooks:
+  - id: yamlfmt
+# -- GitHub Workflows linting --
+- repo: https://github.com/rhysd/actionlint
+  rev: 914e7df21a07ef503a81201c76d2b11c789d3fca  # frozen: v1.7.12
+  hooks:
+  - id: actionlint
+# -- Skills-specific guards --
+- repo: local
+  hooks:
+  - id: validate-skills
+    name: Validate SKILL.md frontmatter against Agent Skills spec
+    entry: uv run --script .scripts/validate_skills.py
+    language: system
+    pass_filenames: false
+    files: '^skills/.*/SKILL\.md$|^\.scripts/validate_skills\.py$'
+  - id: lowercase-no-whitespace-filenames
+    name: Forbid uppercase or whitespace in filenames
+    entry: Filenames must be lowercase with no whitespace
+    language: fail
+    files: '[\sA-Z]'
+    # Allow-listed uppercase basenames (convention filenames) anywhere in the tree,
+    # plus the .github/ workflow dir.
+    exclude: '(^|/)(README\.md|CONTRIBUTING\.md|AGENTS\.md|LICENSE|SKILL\.md)$|^\.github/'
+  - id: no-pip-install-in-workflows
+    name: Ensure GitHub workflows do not use ad-hoc pip install
+    entry: 'pip install'
+    language: pygrep
+    files: '^\.github/.*\.ya?ml$'
+# -- General file hygiene (last: fixes line endings and EOF) --
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: 3e8a8703264a2f4a69428a0aa4dcb512790b2c8c  # frozen: v6.0.0
+  hooks:
+  - id: trailing-whitespace
+  - id: check-added-large-files
+  - id: check-case-conflict
+  - id: mixed-line-ending
+    args: [--fix=lf]
+  - id: check-yaml
+  - id: end-of-file-fixer
+  - id: check-json
+  - id: check-symlinks
+  - id: fix-byte-order-marker
+  - id: detect-private-key

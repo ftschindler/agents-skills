@@ -1,0 +1,33 @@
+---
+name: Governance
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+
+concurrency:
+  group: governance_${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  governance:
+    name: 🩺 (run governance checks)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    defaults:
+      run:
+        shell: bash -elo pipefail {0}
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d  # v10.0.1
+      with:
+        enable-cache: true
+
+    - name: Run pre-commit checks
+      run: uvx prek run --all-files
