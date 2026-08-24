@@ -1,0 +1,49 @@
+.linkspector.yml
+  s_9a26cdecd708d8::t_51f349c177bec3 1-10
+.yamlfmt.yml
+  s_9a26cdecd708d8::t_da83b69f5f529d 1-14
+.gitattributes
+  s_9a26cdecd708d8::t_b0cb5738dba661 1
+.pre-commit-config.yaml
+  s_9a26cdecd708d8::t_41b0265ad51222 65-67
+  s_9a26cdecd708d8::t_a686885a2e02f1 1-64,68-87
+.gitignore
+  s_9a26cdecd708d8::t_c0b724e6d36c53 1-34
+.github/workflows/ci.yml
+  s_9a26cdecd708d8::t_bcdc972c28775c 1-31
+AGENTS.md
+  s_9a26cdecd708d8::t_cbfc09bc692744 1-68
+.markdownlint-cli2.jsonc
+  s_9a26cdecd708d8::t_10d1fdb65a9854 17-20
+  s_9a26cdecd708d8::t_8c3cbb93a0c0e8 13-15
+  s_9a26cdecd708d8::t_d61affdba4ac10 1-12,16,21-22
+README.md
+  s_9a26cdecd708d8::t_424412378f12fd 1-56
+CONTRIBUTING.md
+  s_9a26cdecd708d8::t_0cbd94328e86cd 1-70
+.editorconfig
+  s_9a26cdecd708d8::t_1dee6d3b6cdbc4 1-15
+LICENSE
+  s_9a26cdecd708d8::t_ee833e0350ff95 1-21
+skills/repo-maintenance/SKILL.md
+  s_9a26cdecd708d8::t_525fdc3220bf69 1-318
+.scripts/validate_skills.py
+  s_9a26cdecd708d8::t_0fef7b35ab741d 1
+  s_9a26cdecd708d8::t_7cce0749fa6be6 2-121
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.13",
+  "base_commit_sha": "61fe638de424334c1071048781b24c13db61c993",
+  "prompts": {},
+  "sessions": {
+    "s_9a26cdecd708d8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ses_fcce02872ffewr1iCxjMHUizxh",
+        "model": "unknown"
+      },
+      "human_author": "Felix Schindler <107669806+ftschindler@users.noreply.github.com>"
+    }
+  }
+}
