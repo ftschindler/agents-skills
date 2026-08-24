@@ -247,8 +247,22 @@ condition:
 
 3. **Approve and merge.** If both above pass:
 
+   Use this standard approval comment template (for traceability and to
+   disclose that this was an automated action, not a human review):
+
+   ```text
+   Automatic [repo-maintenance](https://github.com/ftschindler/agents-skills/blob/main/skills/repo-maintenance/SKILL.md) approval with <tool>: <optional reason>
+   ```
+
+   - `<tool>` is the agent/harness performing the action (e.g. `pi.dev`).
+   - `<optional reason>` is a short factual note (e.g. "required checks
+     passing, no unresolved conversations"). Omit it entirely (drop the
+     trailing `:` too) if there's nothing worth adding.
+
+   Fill in the template and pass it to:
+
    ```bash
-   gh pr review <pr-number> --repo <org>/<repo> --approve --body "Automated repo-maintenance: all required checks pass, no unresolved conversations."
+   gh pr review <pr-number> --repo <org>/<repo> --approve --body "<filled-in template>"
    ```
 
    Then check the repo's allowed merge methods before merging - not all repos
