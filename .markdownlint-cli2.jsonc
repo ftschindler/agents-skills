@@ -1,0 +1,22 @@
+{
+  "config": {
+    "default": true,
+    // MD013: Line length — disabled; SKILL.md descriptions and prose wrap naturally.
+    "MD013": false,
+    // MD024: Allow duplicate headings when nested under different parents
+    // (skills reuse "Overview", "Steps", "Examples" section names).
+    "MD024": { "siblings_only": true },
+    // MD029: Ordered list item prefix — allow both 1. 1. 1. and 1. 2. 3. styles.
+    "MD029": { "style": "one_or_ordered" },
+    // MD033: Inline HTML — allowed; skills occasionally embed <details> etc.
+    "MD033": false,
+    // MD036: Emphasis-as-heading — disabled; skills legitimately use bold labels
+    // (e.g. "**a) ...**") as inline step markers rather than headings.
+    "MD036": false,
+    // MD041: First line should be a top-level heading — recognise frontmatter.
+    "MD041": { "level": 1, "front_matter_title": "^\\s*name\\s*[:=]" },
+    // MD060: Table column/pipe alignment — disabled; purely cosmetic and does
+    // not affect rendering. Avoids churn on hand-authored skill tables.
+    "MD060": false
+  }
+}

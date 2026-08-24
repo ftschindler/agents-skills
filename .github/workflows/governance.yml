@@ -1,0 +1,28 @@
+---
+name: Governance
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+
+concurrency:
+  group: governance_${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  governance:
+    name: 🩺 (run governance checks)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    defaults:
+      run:
+        shell: bash -elo pipefail {0}
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+
+    - name: Run pre-commit checks
+      uses: j178/prek-action@bdca6f102f98e2b4c7029491a53dfd366469e33d  # v2.0.4

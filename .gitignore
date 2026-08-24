@@ -1,0 +1,34 @@
+# ~/.agents is a public repo that lives in $HOME. Be strict: ignore everything,
+# then explicitly allow only the skills tree and repo infrastructure. This
+# prevents stray home-directory files from ever being accidentally committed.
+
+# --- Deny by default ---
+/*
+
+# --- Allow: skills tree ---
+!/skills/
+!/skills/**
+
+# --- Allow: repo infrastructure ---
+!/.github/
+!/.github/**
+!/.scripts/
+!/.scripts/**
+!/AGENTS.md
+!/README.md
+!/CONTRIBUTING.md
+!/LICENSE
+!/.gitignore
+!/.gitattributes
+!/.editorconfig
+!/.pre-commit-config.yaml
+!/.markdownlint-cli2.jsonc
+!/.linkspector.yml
+!/.yamlfmt.yml
+
+# --- Re-deny transient junk even inside allowed dirs ---
+**/.DS_Store
+**/*.log
+**/__pycache__/
+**/.ruff_cache/
+**/node_modules/
